@@ -20,7 +20,3 @@ with s3.open('s3://dl.ncsbe.gov/data/ncvoter_Statewide.zip', 'rb') as access:
                 first = False
             else:
                 chunk.to_csv('voterfile_nc_20200201.csv', index=False, header=False, mode='a')
-
-print('hello world')
-
-print('hi')
