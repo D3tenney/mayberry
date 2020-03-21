@@ -16,7 +16,7 @@ with s3.open('s3://dl.ncsbe.gov/data/ncvoter_Statewide.zip', 'rb') as access:
                                  sep='\t', encoding = "ISO-8859-1", chunksize=20000, dtype=object):
             shapes.append(chunk.shape[0])
             if first is True:
-                chunk.to_csv('voterfile_nc_20200201.csv', index=False, header=True)
+                chunk.to_csv('voterfile_nc_20200314.csv', index=False, header=True)
                 first = False
             else:
-                chunk.to_csv('voterfile_nc_20200201.csv', index=False, header=False, mode='a')
+                chunk.to_csv('voterfile_nc_20200314.csv', index=False, header=False, mode='a')

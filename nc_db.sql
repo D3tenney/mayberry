@@ -128,6 +128,11 @@ CREATE TABLE IF NOT EXISTS party_change (
   PRIMARY KEY (voter_reg_num, change_dt)
 );
 
+CREATE TABLE IF NOT EXISTS party_change_staging (
+  LIKE party_change INCLUDING ALL,
+  CONSTRAINT party_change_county_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE
+)
 
 -- VOTE HISTORY
 
@@ -145,3 +150,13 @@ CREATE TABLE IF NOT EXISTS vote_history (
   vtd_description TEXT,
   PRIMARY KEY (ncid, election_lbl, election_desc)
 );
+
+CREATE TABLE IF NOT EXISTS vote_history_staging (
+  LIKE vote_history INCLUDING ALL,
+  CONSTRAINT vote_history_county_id_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE,
+  CONSTRAINT vote_history_voted_county_id_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE,
+  CONSTRAINT vote_history_voted_party_cd_fkey FOREIGN KEY (voted_party_cd)
+    REFERENCES public.party (cd) MATCH SIMPLE
+)
