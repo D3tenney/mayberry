@@ -11,7 +11,7 @@ NC_BUCKET = os.environ.get('NC_BUCKET')
 s3 = s3fs.S3FileSystem(anon=False)
 
 pull_date = ''
-local_file_name = 'voterfile_nc_'+pull_date+'_test.csv'
+local_file_name = 'voterfile_nc_'+pull_date+'.csv'
 
 zip_archive_location = 's3://'+NC_BUCKET+'/data/ncvoter_Statewide.zip'
 
