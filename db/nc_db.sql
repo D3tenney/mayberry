@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS voter (
     party_cd TEXT REFERENCES party(cd),
     gender_code TEXT,
     birth_year SMALLINT,
-    birth_age SMALLINT,
+    --birth_age SMALLINT,
     birth_state TEXT,
     registr_dt DATE NOT NULL,
     county_id SMALLINT NOT NULL REFERENCES county(id),
@@ -80,8 +80,9 @@ CREATE TABLE IF NOT EXISTS voter (
     -- school_dist_desc
     cong_dist_abbrv TEXT,
     nc_senate_abbrv TEXT,
-    nc_house_abbrv TEXT -- ,
+    nc_house_abbrv TEXT,
     -- super_court_abbrv TEXT
+    vintage_month TEXT NOT NULL DEFAULT LEFT(CAST(CURRENT_DATE AS TEXT), 7)
     );
 
 CREATE TABLE IF NOT EXISTS voter_staging (
@@ -100,8 +101,9 @@ CREATE TABLE IF NOT EXISTS voter_staging (
     REFERENCES public.voter_status (cd) MATCH SIMPLE
 );
 
-CREATE TABLE IF NOT EXISTS voter_old (
+CREATE TABLE IF NOT EXISTS former_voter (
   LIKE voter,
+  reason TEXT NOT NULL,
   inserted_on DATE DEFAULT CURRENT_DATE,
   CONSTRAINT voter_county_id_fkey FOREIGN KEY (county_id)
     REFERENCES public.county (id) MATCH SIMPLE,
@@ -128,6 +130,11 @@ CREATE TABLE IF NOT EXISTS party_change (
   PRIMARY KEY (voter_reg_num, change_dt)
 );
 
+CREATE TABLE IF NOT EXISTS party_change_staging (
+  LIKE party_change INCLUDING ALL,
+  CONSTRAINT party_change_county_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE
+)
 
 -- VOTE HISTORY
 
@@ -145,3 +152,13 @@ CREATE TABLE IF NOT EXISTS vote_history (
   vtd_description TEXT,
   PRIMARY KEY (ncid, election_lbl, election_desc)
 );
+
+CREATE TABLE IF NOT EXISTS vote_history_staging (
+  LIKE vote_history INCLUDING ALL,
+  CONSTRAINT vote_history_county_id_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE,
+  CONSTRAINT vote_history_voted_county_id_fkey FOREIGN KEY (county_id)
+    REFERENCES public.county (id) MATCH SIMPLE,
+  CONSTRAINT vote_history_voted_party_cd_fkey FOREIGN KEY (voted_party_cd)
+    REFERENCES public.party (cd) MATCH SIMPLE
+)
