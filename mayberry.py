@@ -1,12 +1,12 @@
-from flask import Flask
+from app import app, api, celery
 
-app = Flask(__name__)
+''' ADD ROUTES '''
+from app.resources.health_api import Health
+from app.resources.process_api import Process
 
+api.add_resource(Health, '/health')
+api.add_resource(Process, '/process')
 
-@app.route('/')
-def hello_world():
-    return 'Hello world'
-
-
+''' RUN '''
 if __name__ == '__main__':
     app.run()

@@ -42,35 +42,35 @@ CREATE TABLE IF NOT EXISTS party (
 CREATE TABLE IF NOT EXISTS voter (
     ncid TEXT NOT NULL PRIMARY KEY,
     voter_reg_num TEXT NOT NULL,
-    first_name TEXT,
-    middle_name TEXT,
-    last_name TEXT,
+    first_name TEXT NOT NULL,
+    middle_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
     status_cd TEXT REFERENCES voter_status(cd),
     reason_cd TEXT REFERENCES voter_status_reason(cd),
-    absent_ind TEXT,
-    res_street_address TEXT,
-    res_city_desc TEXT,
-    state_cd TEXT,
-    zip_code TEXT,
-    mail_addr1 TEXT,
-    mail_addr2 TEXT,
-    mail_addr3 TEXT,
-    mail_addr4 TEXT,
-    mail_city TEXT,
-    mail_state TEXT,
-    mail_zipcode TEXT,
-    full_phone_number TEXT,
-    drivers_lic TEXT,
-    race_code TEXT REFERENCES race(code),
-    ethnic_code TEXT REFERENCES ethnicity(code),
-    party_cd TEXT REFERENCES party(cd),
-    gender_code TEXT,
-    birth_year SMALLINT,
+    absent_ind TEXT NOT NULL,
+    res_street_address TEXT NOT NULL,
+    res_city_desc TEXT NOT NULL,
+    state_cd TEXT NOT NULL,
+    zip_code TEXT NOT NULL,
+    mail_addr1 TEXT NOT NULL,
+    mail_addr2 TEXT NOT NULL,
+    mail_addr3 TEXT NOT NULL,
+    mail_addr4 TEXT NOT NULL,
+    mail_city TEXT NOT NULL,
+    mail_state TEXT NOT NULL,
+    mail_zipcode TEXT NOT NULL,
+    full_phone_number TEXT NOT NULL,
+    drivers_lic TEXT NOT NULL,
+    race_code TEXT NOT NULL REFERENCES race(code),
+    ethnic_code TEXT NOT NULL REFERENCES ethnicity(code),
+    party_cd TEXT NOT NULL REFERENCES party(cd),
+    gender_code TEXT NOT NULL,
+    birth_year SMALLINT NOT NULL,
     --birth_age SMALLINT,
-    birth_state TEXT,
+    birth_state TEXT NOT NULL,
     registr_dt DATE NOT NULL,
     county_id SMALLINT NOT NULL REFERENCES county(id),
-    precinct_abbrv TEXT,
+    precinct_abbrv TEXT NOT NULL,
     -- precinct_desc,
     -- municipality_abbrv TEXT,
     -- municipality_desc,
@@ -78,9 +78,9 @@ CREATE TABLE IF NOT EXISTS voter (
     -- ward_desc,
     -- school_dist_abbrv TEXT,
     -- school_dist_desc
-    cong_dist_abbrv TEXT,
-    nc_senate_abbrv TEXT,
-    nc_house_abbrv TEXT,
+    cong_dist_abbrv TEXT NOT NULL,
+    nc_senate_abbrv TEXT NOT NULL,
+    nc_house_abbrv TEXT NOT NULL,
     -- super_court_abbrv TEXT
     vintage_month TEXT NOT NULL DEFAULT LEFT(CAST(CURRENT_DATE AS TEXT), 7)
     );
@@ -101,10 +101,11 @@ CREATE TABLE IF NOT EXISTS voter_staging (
     REFERENCES public.voter_status (cd) MATCH SIMPLE
 );
 
-CREATE TABLE IF NOT EXISTS former_voter (
+CREATE TABLE IF NOT EXISTS voter_past (
   LIKE voter,
   reason TEXT NOT NULL,
   inserted_on DATE DEFAULT CURRENT_DATE,
+  PRIMARY KEY(ncid, inserted_on),
   CONSTRAINT voter_county_id_fkey FOREIGN KEY (county_id)
     REFERENCES public.county (id) MATCH SIMPLE,
   CONSTRAINT voter_ethnic_code_fkey FOREIGN KEY (ethnic_code)
@@ -134,7 +135,7 @@ CREATE TABLE IF NOT EXISTS party_change_staging (
   LIKE party_change INCLUDING ALL,
   CONSTRAINT party_change_county_fkey FOREIGN KEY (county_id)
     REFERENCES public.county (id) MATCH SIMPLE
-)
+);
 
 -- VOTE HISTORY
 
@@ -161,4 +162,4 @@ CREATE TABLE IF NOT EXISTS vote_history_staging (
     REFERENCES public.county (id) MATCH SIMPLE,
   CONSTRAINT vote_history_voted_party_cd_fkey FOREIGN KEY (voted_party_cd)
     REFERENCES public.party (cd) MATCH SIMPLE
-)
+);

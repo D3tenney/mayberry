@@ -34,3 +34,45 @@ VOTER_SUBSET = ['ncid', 'voter_reg_num',
                 'registr_dt',
                 'county_id', 'precinct_abbrv',
                 'cong_dist_abbrv', 'nc_senate_abbrv', 'nc_house_abbrv']
+
+HELPER_SUBSET = ['county_id', 'county_desc',
+                 'ethnic_code',
+                 'race_code',
+                 'party_cd',
+                 'precinct_abbrv', 'precinct_desc',
+                 'status_cd', 'voter_status_desc',
+                 'reason_cd',
+                 'voter_status_reason_desc']
+
+HELPER_DESCRIPTIONS = {'ethnicity': {'HL': 'HISPANIC OR LATINO',
+                                     'NL': 'NOT HISPANIC OR LATINO',
+                                     'UN': 'NOT PROVIDED'},
+                       'race': {'': 'None',
+                                'A': 'ASIAN',
+                                'B': 'BLACK OR AFRICAN AMERICAN',
+                                'I': 'AMERICAN INDIAN OR ALASKA NATIVE',
+                                'M': 'TWO OR MORE RACES',
+                                'O': 'OTHER',
+                                'U': 'UNDESIGNATED',
+                                'W': 'WHITE'},
+                       'party': {'CST': 'CONSTITUTION PARTY',
+                                 'DEM': 'DEMOCRATIC PARTY',
+                                 'GRE': 'GREEN PARTY',
+                                 'LIB': 'LIBERTARIAN PARTY',
+                                 'REP': 'REPUBLICAN PARTY',
+                                 'UNA': 'UNAFFILIATED'}}
+
+REMOVED_VOTER_NULL_COLS = ['res_city_desc', 'state_cd', 'zip_code',
+                           'mail_addr1', 'mail_addr2', 'mail_addr3',
+                           'mail_addr4', 'mail_state', 'mail_zipcode',
+                           'full_phone_number', 'precinct_abbrv',
+                           'cong_dist_abbrv', 'nc_senate_abbrv',
+                           'nc_house_abbrv']
+
+NULL_REPLACE_COLS = ['first_name', 'middle_name', 'last_name',
+                     'res_street_address', 'res_city_desc',
+                     'state_cd', 'zip_code', 'mail_addr1', 'mail_addr2',
+                     'mail_addr3', 'mail_addr4', 'mail_city',
+                     'mail_state', 'mail_zipcode', 'full_phone_number',
+                     'gender_code', 'birth_state', 'precinct_abbrv',
+                     'cong_dist_abbrv', 'nc_senate_abbrv', 'nc_house_abbrv']
