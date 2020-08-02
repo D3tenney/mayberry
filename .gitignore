@@ -1,6 +1,7 @@
 venv/
 .ipynb_checkpoints/
 json_blobs/
+dev/
 .env
 
 *.csv

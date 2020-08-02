@@ -9,4 +9,4 @@ api.add_resource(Process, '/process')
 
 ''' RUN '''
 if __name__ == '__main__':
-    app.run()
+    app.run(host="localhost", port=app.config["PORT"], debug=True)

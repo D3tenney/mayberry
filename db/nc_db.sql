@@ -101,9 +101,8 @@ CREATE TABLE IF NOT EXISTS voter_staging (
     REFERENCES public.voter_status (cd) MATCH SIMPLE
 );
 
-CREATE TABLE IF NOT EXISTS voter_past (
+CREATE TABLE IF NOT EXISTS voter_removed (
   LIKE voter,
-  reason TEXT NOT NULL,
   inserted_on DATE DEFAULT CURRENT_DATE,
   PRIMARY KEY(ncid, inserted_on),
   CONSTRAINT voter_county_id_fkey FOREIGN KEY (county_id)
@@ -118,6 +117,14 @@ CREATE TABLE IF NOT EXISTS voter_past (
     REFERENCES public.voter_status_reason (cd) MATCH SIMPLE,
   CONSTRAINT voter_status_cd_fkey FOREIGN KEY (status_cd)
     REFERENCES public.voter_status (cd) MATCH SIMPLE
+);
+
+CREATE TABLE IF NOT EXISTS voter_change (
+  ncid TEXT NOT NULL,
+  inserted_on DATE DEFAULT CURRENT_DATE,
+  reason TEXT NOT NULL,
+  old_data JSON NOT NULL,
+  PRIMARY KEY (ncid, inserted_on, reason)
 );
 
 -- PARTY CHANGE

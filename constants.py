@@ -1,3 +1,5 @@
+
+"""
 VOTER_DTYPES = {'ncid': object, 'voter_reg_num': object,
                 'first_name': object, 'middle_name': object,
                 'last_name': object,
@@ -34,7 +36,68 @@ VOTER_SUBSET = ['ncid', 'voter_reg_num',
                 'registr_dt',
                 'county_id', 'precinct_abbrv',
                 'cong_dist_abbrv', 'nc_senate_abbrv', 'nc_house_abbrv']
+"""
 
+VOTER_DTYPES = {'ncid': object, 'voter_reg_num': object,
+                'status_cd': object, 'absent_ind': object,
+                'state_cd': object, 'mail_state': object,
+                'res_city_desc': object, 'mail_city': object,
+                'drivers_lic': object, 'race_code': object,
+                'ethnic_code': object, 'party_cd': object,
+                'gender_code': object, 'county_id': int,
+                'cong_dist_abbrv': object, 'nc_senate_abbrv': object,
+                'nc_house_abbrv': object,
+                'registr_dt': str}
+
+VOTE_HISTORY_READ_COLS = ['ncid', 'election_lbl', 'election_desc']
+
+VOTER_READ_COLS = ['ncid',
+                   # --geography
+                   'county_id', 'cong_dist_abbrv',
+                   'nc_senate_abbrv', 'nc_house_abbrv',
+                   'res_city_desc',
+                   # --political
+                   'party_cd',
+                   # --demographic
+                   'gender_code', 'race_code', 'ethnic_code',
+                   # --individual status
+                   'status_cd', 'absent_ind']
+
+VOTER_PARTITION_COLS = [
+                        # --geography
+                        'county_id', 'cong_dist_abbrv',
+                        'nc_senate_abbrv', 'nc_house_abbrv',
+                        'res_city_desc',
+                        # --political
+                        'party_cd',
+                        # --demographic
+                        'gender_code', 'race_code', 'ethnic_code',
+                        # --individual status
+                        'status_cd', 'absent_ind',
+                        # 'drivers_lic'
+                        'prior_voter', 'primary_voter'
+                        ]
+
+VOTER_NON_PARTITION_COLS = ['ncid', 'voter_reg_num', 'registr_dt']
+
+"""
+VOTER_SUBSET = [
+                # partition columns
+                # --geography
+                'county_id', 'cong_dist_abbrv',
+                'nc_senate_abbrv', 'nc_house_abbrv',
+                'res_city_desc',
+                # --political
+                'party_cd',
+                # --demographic
+                'gender_code', 'race_code', 'ethnic_code'
+                # --individual status
+                'status_cd', 'absent_ind',
+                'drivers_lic',
+                # file columns
+                'ncid', 'voter_reg_num',
+                'registr_dt']
+"""
 HELPER_SUBSET = ['county_id', 'county_desc',
                  'ethnic_code',
                  'race_code',
