@@ -154,4 +154,4 @@ Below are sample payloads for each component in `process`. You can send these by
 ```
 
 ## Future
-Testing, improved logging, improved error handling, and cloud deployment are all forthcoming.
+Testing, payload validation, improved logging, improved error handling, and cloud deployment are all forthcoming.
