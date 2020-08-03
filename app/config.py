@@ -11,21 +11,10 @@ class Config(object):
     DEBUG = True
     TESTING = False
 
+    HOST = environ.get("HOST")
     PORT = int(environ.get("PORT"))
 
     LOG_LEVEL = environ.get("LOG_LEVEL")
-
-    # db setup
-    PG_USER = environ.get("PG_USER")
-    PG_PASS = environ.get("PG_PASS")
-    PG_HOST = environ.get("PG_HOST")
-    PG_PORT = environ.get("PG_PORT")
-    PG_DB = environ.get("PG_DB")
-
-    PG_CXN = f"postgresql://{PG_USER}:{PG_PASS}@{PG_HOST}:{PG_PORT}/{PG_DB}"
-
-    SQLALCHEMY_DATABASE_URI = PG_CXN
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # aws setup
     AWS_ACCESS_KEY_ID = environ.get("AWS_ACCESS_KEY_ID")
@@ -41,8 +30,6 @@ class Config(object):
     VH_FILE = environ.get("VH_FILE")
     VH_FILE_ZIP = environ.get("VH_FILE_ZIP")
     PC_FILE = environ.get("PC_FILE")
-
-    VF_CHUNKSIZE = int(environ.get("VF_CHUNKSIZE"))
 
     # redis setup (queue)
     REDIS_HOST = environ.get("REDIS_HOST")
