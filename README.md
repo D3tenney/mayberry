@@ -7,6 +7,8 @@ You will need an AWS account, and an IAM user with permissions for S3 and Athena
 
 AWS costs money, and while this project was designed to be cost-effective, nothing is free. I strongly suggest setting up automated cost warnings in AWS billing.
 
+This software may increase the accessibility of North Carolina voter records, which are publicly available. However, the use of such information is subject to North Carolina laws, and the user is responsible for any violation of applicable laws regarding use of North Carolina voter data.
+
 Mayberry is still in development.
 
 ## Installation and Setup
