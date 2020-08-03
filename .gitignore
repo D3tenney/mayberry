@@ -7,7 +7,6 @@ dev/
 *.csv
 *.parquet
 *.zip
-*.txt
 *.tsv
 *.psv
 *.gz
