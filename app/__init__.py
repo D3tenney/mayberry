@@ -33,13 +33,16 @@ logging.getLogger('requests').setLevel(logging.WARNING)
 # aws setup
 s3client = boto3.client('s3',
                         aws_access_key_id=app.config["AWS_ACCESS_KEY_ID"],
-                        aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"])
+                        aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"],
+                        region_name=app.config["AWS_REGION"])
 s3resource = boto3.resource('s3',
                             aws_access_key_id=app.config["AWS_ACCESS_KEY_ID"],
-                            aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"])
+                            aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"],
+                            region_name=app.config["AWS_REGION"])
 athenaclient = boto3.client('athena',
                             aws_access_key_id=app.config["AWS_ACCESS_KEY_ID"],
-                            aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"])
+                            aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"],
+                            region_name=app.config["AWS_REGION"])
 
 # TODO: just use boto3 throughout, rather than mixing in s3fs
 # s3fs setup

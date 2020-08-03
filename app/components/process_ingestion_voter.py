@@ -67,11 +67,13 @@ def process_ingestion_voter(message):
                            .get_query_execution(QueryExecutionId=query_id)
                            ['QueryExecution']['Status']['State'])
         if status == 'SUCCEEDED':
+            print('partition added')
             break
         if status in ['FAILED', 'CANCELLED']:
             print('Error adding partition to Athena table.')
+            break
         else:
             counter += 1
             time.sleep(2)
-    print('partition added')
+
     return 'Individual and Grouped files successfully written.'

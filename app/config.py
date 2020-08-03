@@ -19,6 +19,7 @@ class Config(object):
     # aws setup
     AWS_ACCESS_KEY_ID = environ.get("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION = environ.get("AWS_REGION")
     MAYBERRY_BUCKET = environ.get("MAYBERRY_BUCKET")
     NC_BUCKET = environ.get("NC_BUCKET")
     ATHENA_DB = environ.get("ATHENA_DB")
@@ -29,7 +30,6 @@ class Config(object):
     VF_FILE_ZIP = environ.get("VF_FILE_ZIP")
     VH_FILE = environ.get("VH_FILE")
     VH_FILE_ZIP = environ.get("VH_FILE_ZIP")
-    PC_FILE = environ.get("PC_FILE")
 
     # redis setup (queue)
     REDIS_HOST = environ.get("REDIS_HOST")

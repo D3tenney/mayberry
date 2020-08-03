@@ -1,4 +1,4 @@
-from app import app, celery, athenaclient, s3resource, S3FS
+from app import app, celery, athenaclient, s3resource, s3client, S3FS
 
 import time
 from io import BytesIO
@@ -43,7 +43,7 @@ def process_query_counts(message):
                                                    'Database': app.config["ATHENA_DB"]
                                                   },
                                                   ResultConfiguration={
-                                                   'OutputLocation': f's3://{app.config["MAYBERRY_BUCKET"]}/count_test/'
+                                                   'OutputLocation': f's3://{app.config["MAYBERRY_BUCKET"]}/count_results_csv/'
                                                   })['QueryExecutionId']
 
     counter = 0
@@ -53,15 +53,25 @@ def process_query_counts(message):
                   ['QueryExecution']['Status']['State'])
 
         if status == 'SUCCEEDED':
+            # NOTES: transient TypeError here. 'str' object not callable
+            # seems to go away if Celery worker restarted...
+            '''
             object = (s3resource.Bucket(app.config["MAYBERRY_BUCKET"])
-                                .Object(key=f'count_test/{query_id}.csv')
+                                .Object(key=f'count_results_csv/{query_id}.csv')
                                 .get())
             df = pd.read_csv(BytesIO(object['Body'].read()), encoding='utf-8')
+            '''
+            # NOTES: This code _seems_ to fix the above problem. Want to leave
+            # it all in to test, though.
+            object = s3client.get_object(Bucket=app.config["MAYBERRY_BUCKET"],
+                                         Key=f'count_results_csv/{query_id}.csv')
+            df = pd.read_csv(object['Body'])
             df.to_parquet(f's3://{app.config["MAYBERRY_BUCKET"]}/count_results_parquet/{message["audience_id"]}.parquet', index=False)
+            print('counts file written')
             break
         if status in ['FAILED', 'CANCELLED']:
+            print('count query failed')
             break
             return None
         else:
             time.sleep(2)
-    print('counts file written')
