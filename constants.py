@@ -21,7 +21,7 @@ VOTER_READ_COLS = ['ncid',
                    # --demographic
                    'gender_code', 'race_code', 'ethnic_code',
                    # --individual status
-                   'status_cd', 'absent_ind']
+                   'status_cd']
 
 VOTER_PARTITION_COLS = [
                         # --geography

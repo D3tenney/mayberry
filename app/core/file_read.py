@@ -71,7 +71,7 @@ def read_vf_for_vf_ingestion(timestamp):
                                     # nrows=50000,
                                     dtype=VOTER_DTYPES,
                                     usecols=VOTER_READ_COLS)
-                vf_df['absent_ind'] = vf_df['absent_ind'].replace(' ', '')
+                vf_df["absent_ind"] = ''  # This column was eliminated on 2/12/2022. Creating as blank for consistency
                 vf_df = vf_df.fillna('')
                 print(f'vf shape: {vf_df.shape[0]} rows')
                 return vf_df
