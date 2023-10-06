@@ -1,7 +1,9 @@
 venv/
+new_venv/
 .ipynb_checkpoints/
 json_blobs/
 dev/
+__pycache__/
 .env
 
 *.csv
